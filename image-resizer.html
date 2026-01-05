@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Resizer – ToolMint</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+<a class="back" href="index.html">← Back</a>
+
+<div class="tool-box">
+<h2>Image Resizer</h2>
+<input type="file" id="img">
+<input type="number" id="w" placeholder="Width">
+<input type="number" id="h" placeholder="Height">
+<button onclick="resize()">Resize</button>
+<a id="down"></a>
+</div>
+</div>
+
+<canvas id="c" style="display:none"></canvas>
+
+<script>
+function resize(){
+ let f=document.getElementById("img").files[0];
+ let w=document.getElementById("w").value;
+ let h=document.getElementById("h").value;
+ let img=new Image();
+ img.src=URL.createObjectURL(f);
+ img.onload=()=>{
+  let c=document.getElementById("c");
+  c.width=w; c.height=h;
+  c.getContext("2d").drawImage(img,0,0,w,h);
+  c.toBlob(b=>{
+    let a=document.getElementById("down");
+    a.href=URL.createObjectURL(b);
+    a.download="resized.jpg";
+    a.innerText="Download";
+  },"image/jpeg",0.9);
+ }
+}
+</script>
+
+</body>
+</html>

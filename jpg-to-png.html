@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JPG to PNG – ToolMint</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+<a class="back" href="index.html">← Back</a>
+
+<div class="tool-box">
+<h2>JPG to PNG</h2>
+<input type="file" id="img">
+<button onclick="convert()">Convert</button>
+<a id="down"></a>
+</div>
+</div>
+
+<canvas id="c" style="display:none"></canvas>
+
+<script>
+function convert(){
+ let f=document.getElementById("img").files[0];
+ let img=new Image();
+ img.src=URL.createObjectURL(f);
+ img.onload=()=>{
+  let c=document.getElementById("c");
+  c.width=img.width; c.height=img.height;
+  c.getContext("2d").drawImage(img,0,0);
+  c.toBlob(b=>{
+    let a=document.getElementById("down");
+    a.href=URL.createObjectURL(b);
+    a.download="image.png";
+    a.innerText="Download PNG";
+  },"image/png");
+ }
+}
+</script>
+
+</body>
+</html>

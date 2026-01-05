@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Size Checker – ToolMint</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container fade">
+<a class="back" href="index.html">← Back</a>
+
+<div class="tool-box glow">
+<h2>Image Size Checker</h2>
+<input type="file" id="img">
+<div id="res"></div>
+</div>
+</div>
+
+<script>
+document.getElementById("img").onchange=function(){
+ let f=this.files[0];
+ document.getElementById("res").innerText=
+ "Size: "+(f.size/1024).toFixed(2)+" KB";
+}
+</script>
+
+</body>
+</html>

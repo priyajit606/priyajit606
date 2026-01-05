@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Minecraft Name Generator – ToolMint</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container fade">
+<a class="back" href="index.html">← Back</a>
+
+<div class="tool-box glow">
+<h2>Minecraft Name Generator</h2>
+<button onclick="gen()">Generate Name</button>
+<h3 id="name"></h3>
+</div>
+</div>
+
+<script>
+function gen(){
+ const a=["Creeper","Miner","PvP","Craft","Ender","Knight","Pro"];
+ document.getElementById("name").innerText=
+ a[Math.floor(Math.random()*a.length)] +
+ Math.floor(Math.random()*9999);
+}
+</script>
+
+</body>
+</html>
