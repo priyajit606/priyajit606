@@ -1,34 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ToolMint – Free Online Tools</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ToolMint offers free image, PDF, YouTube and gaming tools online.">
+<title>ToolMint – Free Online Tools</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ToolMint offers free image, PDF, YouTube and gaming tools online.">
+<link rel="stylesheet" href="style.css">
 
-  
-  
+<!-- Monetag / Ads -->
+<meta name="monetag" content="e490d8b0bfdabd4e13a1af15257deb1c">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
-  <link rel="apple-touch-icon" href="favicon.png">
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <script async="async" data-cfasync="false" src="https://pl28407197.effectivegatecpm.com/f99e16b420320c5099191f01bb437d94/invoke.js"></script>
-<div id="container-f99e16b420320c5099191f01bb437d94"></div>
 <div class="container fade">
 
 <header>
   <h1 id="title">ToolMint</h1>
   <p id="subtitle">All-in-One Free Online Utility Tools</p>
-
-  <!-- Language Toggle -->
-  <button class="lang-btn" onclick="setLang('en')">English</button>
-  <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
 </header>
 
 <!-- 🔍 Search -->
@@ -43,7 +34,7 @@
 <div class="section">
 <h2>🖼 Image Tools</h2>
 <div class="cards tools">
-  <a class="card" href="image-compressor.html">Image Compressor <span class="badge">Popular</span></a>
+  <a class="card" href="image-compressor.html">Image Compressor</a>
   <a class="card" href="image-resizer.html">Image Resizer</a>
   <a class="card" href="image-size-checker.html">Image Size Checker</a>
   <a class="card" href="jpg-to-png.html">JPG to PNG</a>
@@ -62,7 +53,7 @@
 <div class="section">
 <h2>▶ YouTube Tools</h2>
 <div class="cards tools">
-  <a class="card" href="youtube-thumbnail.html">YouTube Thumbnail Size <span class="badge">Popular</span></a>
+  <a class="card" href="youtube-thumbnail.html">YouTube Thumbnail Size</a>
 </div>
 </div>
 
@@ -74,47 +65,33 @@
 </div>
 </div>
 
+<!-- NEW: Question → Answer Tool LINK -->
+<div class="section">
+<h2>📷 Question to Answer Tool</h2>
+<div class="cards tools">
+  <a class="card" href="qa.html">Upload Question Image → Get Answer</a>
+</div>
+</div>
+
+
 </div>
 
 <!-- 💰 BOTTOM AD -->
 <div class="ad-box">Bottom Ad Space</div>
 
-<!-- 📊 Visitor Counter -->
-<div class="counter">
-Visitors: <span id="count"></span>
-</div>
-
 <footer style="text-align:center;font-size:13px;opacity:.7">
 © 2026 ToolMint
 </footer>
 
-</div>
-
 <script>
-/* Search */
+// Search
 function searchTools(val){
   val = val.toLowerCase();
   document.querySelectorAll(".tools a").forEach(a=>{
     a.style.display = a.innerText.toLowerCase().includes(val) ? "block" : "none";
   });
 }
-
-/* Language toggle */
-function setLang(l){
-  if(l==="hi"){
-    title.innerText="टूलमिंट";
-    subtitle.innerText="मुफ्त ऑनलाइन टूल्स वेबसाइट";
-  }else{
-    title.innerText="ToolMint";
-    subtitle.innerText="All-in-One Free Online Utility Tools";
-  }
-}
-
-/* Visitor Counter (local) */
-let c = localStorage.getItem("visits") || 0;
-c++;
-localStorage.setItem("visits", c);
-document.getElementById("count").innerText = c;
 </script>
+
 </body>
 </html>
