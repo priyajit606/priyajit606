@@ -1,24 +1,59 @@
 async function getAnswer() {
-  const file = document.getElementById("img").files[0];
-  if (!file) {
+  const fileInput = document.getElementById("img");
+  const result = document.getElementById("result");
+
+  if (!fileInput.files.length) {
     alert("Please upload an image");
     return;
   }
 
-  document.getElementById("result").innerText = "Reading question...";
+  result.innerText = "Reading question from image...";
 
   // OCR
-  const { data: { text } } = await Tesseract.recognize(file, 'eng');
+  const { data: { text } } = await Tesseract.recognize(
+    fileInput.files[0],
+    "eng"
+  );
 
-  document.getElementById("result").innerText = "Finding answer...";
+  const question = text.trim();
 
-  // Send text to backend (Cloudflare Worker)
-  const res = await fetch("https://YOUR_WORKER_URL", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question: text })
-  });
+  if (!question) {
+    result.innerText = "Could not read question clearly.";
+    return;
+  }
 
-  const data = await res.json();
-  document.getElementById("result").innerText = data.answer;
+  result.innerText = "Finding answer...";
+
+  // 🔑 PUT YOUR GEMINI API KEY HERE
+  const API_KEY = "AIzaSyB_gXI7OUY_C31PmsMFJ50fnkqADccBe4w";
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              { text: question }
+            ]
+          }
+        ]
+      })
+    }
+  );
+
+  const data = await response.json();
+
+  try {
+    const answer =
+      data.candidates[0].content.parts[0].text;
+
+    result.innerText = "Answer:\n\n" + answer;
+  } catch (e) {
+    result.innerText = "Answer not found. Try another image.";
+  }
 }
