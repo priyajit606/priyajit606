@@ -25,7 +25,7 @@ async function getAnswer() {
 
     result.innerText = "Finding answer...";
 
-    const API_KEY = "AIzaSyB_gXI7OUY_C31PmsMFJ50fnkqADccBe4w";
+    const API_KEY = "AIzaSyAENhnUgCenURwlU5HMbJQ9DbeiLykYmpg";
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
