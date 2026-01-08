@@ -10,7 +10,6 @@ async function getAnswer() {
   result.innerText = "Reading question from image...";
 
   try {
-    // OCR
     const ocr = await Tesseract.recognize(
       fileInput.files[0],
       "eng"
@@ -28,7 +27,7 @@ async function getAnswer() {
     const API_KEY = "AIzaSyAENhnUgCenURwlU5HMbJQ9DbeiLykYmpg";
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
       {
         method: "POST",
         headers: {
