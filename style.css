@@ -15,6 +15,7 @@ body{
 
 .container{
   max-width:1100px;
+  width: 90%; /* Responsive width */
   margin:auto;
   padding:15px;
 }
@@ -41,6 +42,9 @@ button{
   font-weight:bold;
   cursor:pointer;
   border-radius:8px;
+  font-size:16px;
+  max-width:300px;
+  margin-top:10px;
 }
 
 input{
@@ -87,27 +91,31 @@ input{
 }
 
 .cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
+  display: flex; /* Flex for responsiveness */
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.card{
-  background:#020617;
-  padding:18px;
-  border-radius:14px;
+.cards a.card{
+  flex:1 1 calc(50% - 10px); /* 2 cards per row */
   text-align:center;
+  padding:14px;
+  font-size:14px;
+  box-sizing:border-box;
+  background:#020617;
+  border-radius:14px;
   font-weight:bold;
   color:#e5e7eb;
   transition:0.35s;
   border:1px solid #22c55e22;
 }
 
-.card:hover{
+.cards a.card:hover{
   transform:translateY(-6px) scale(1.02);
   box-shadow:0 0 30px #22c55e55;
   color:#22c55e;
 }
+
 /* Search bar */
 .search{
   width:100%;
@@ -145,6 +153,7 @@ input{
   font-size:14px;
   opacity:.8;
 }
+
 /* 📱 Mobile Optimization */
 @media (max-width:768px){
 
@@ -156,12 +165,10 @@ input{
     padding:10px;
   }
 
-  .cards{
-    grid-template-columns:1fr;
-  }
-
-  .card{
-    padding:14px;
+  .cards a.card{
+    flex:1 1 100%; /* 1 card per row */
+    font-size:16px;
+    padding:15px;
   }
 
   .search{
@@ -172,44 +179,14 @@ input{
   .ad-box{
     font-size:13px;
   }
-}
-/* Container responsive */
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px;
+
 }
 
-/* Tool cards responsive */
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.cards a.card {
-  flex: 1 1 calc(50% - 10px); /* mobile: 2 cards per row */
-  text-align: center;
-  padding: 12px;
-  font-size: 14px;
-  box-sizing: border-box;
-}
-
-/* Media query for very small screens */
-@media (max-width: 480px) {
-  .cards a.card {
-    flex: 1 1 100%; /* Mobile me 1 card per row */
-    font-size: 16px;
-    padding: 15px;
+/* Extra small screens (phones) */
+@media (max-width:480px){
+  .cards a.card{
+    flex:1 1 100%;
+    font-size:16px;
+    padding:15px;
   }
-}
-
-/* Buttons responsive */
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  width: 100%;
-  max-width: 300px;
-  margin-top: 10px;
 }
