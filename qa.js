@@ -10,7 +10,6 @@ async function getAnswer() {
   result.innerText = "Reading question from image...";
 
   try {
-    // OCR (same)
     const ocr = await Tesseract.recognize(
       fileInput.files[0],
       "eng"
@@ -25,7 +24,12 @@ async function getAnswer() {
 
     result.innerText = "Finding answer...";
 
-    // ✅ Gemini via Official JS SDK
+    // 🔴 SAFETY CHECK
+    if (!window.genAI) {
+      result.innerText = "Gemini not loaded. Refresh page.";
+      return;
+    }
+
     const model = window.genAI.getGenerativeModel({
       model: "gemini-1.5-flash"
     });
@@ -37,15 +41,10 @@ async function getAnswer() {
     const response = await aiResult.response;
     const answer = response.text();
 
-    if (!answer) {
-      result.innerText = "Answer not found. Try another question.";
-      return;
-    }
-
     result.innerText = "Answer:\n\n" + answer;
 
   } catch (err) {
-    console.error(err);
-    result.innerText = "Something went wrong. Try again.";
+    console.error("💥 Gemini Error:", err);  // ✅ Asli error dikhayega
+    result.innerText = "Error occurred: Check console for details.";
   }
 }
