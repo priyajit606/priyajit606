@@ -32,7 +32,15 @@
 <!-- OCR -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
 
-<!-- JS -->
+<!-- ✅ Gemini Official JS SDK (NEW, IMPORTANT) -->
+<script type="module">
+  import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+  // 🔑 YAHAN APNI AI STUDIO WALI API KEY DAALO
+  window.genAI = new GoogleGenerativeAI("AIzaSyDABnelsvpW41WCfjtnoBnCCLKuiGT1fM8");
+</script>
+
+<!-- Tumhara existing JS -->
 <script src="qa.js"></script>
 
 </body>
