@@ -219,3 +219,24 @@ button, input {
   font-weight: bold;
   color: #22c55e;
 }
+.glow-text{
+  color:#00ffd5;
+  font-size:40px;
+  text-align:center;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{
+    text-shadow:
+      0 0 5px #00ffd5,
+      0 0 10px #00ffd5,
+      0 0 20px #00ffd5;
+  }
+  to{
+    text-shadow:
+      0 0 10px #00ffd5,
+      0 0 20px #00ffd5,
+      0 0 40px #00ffd5;
+  }
+}
