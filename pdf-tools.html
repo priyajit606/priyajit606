@@ -1,166 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Image to PDF Converter – Free Online Tool | Wexla</title>
-
-<meta name="description" content="Convert images to PDF online for free. Fast, secure, animated and mobile friendly Image to PDF tool by Wexla.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#000;
-  color:#fff;
-}
-.container{
-  max-width:600px;
-  margin:auto;
-  padding:15px;
-}
-.back{
-  color:#4CAF50;
-  text-decoration:none;
-}
-.tool-box{
-  background:#111;
-  padding:20px;
-  border-radius:12px;
-  text-align:center;
-  box-shadow:0 0 15px rgba(76,175,80,.2);
-}
-h1{
-  margin-bottom:10px;
-}
-input[type=file]{
-  width:100%;
-  margin:15px 0;
-}
-button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#4CAF50;
-  color:#000;
-  font-size:16px;
-  cursor:pointer;
-  transition:.3s;
-}
-button:hover{
-  transform:scale(1.03);
-  box-shadow:0 0 10px #4CAF50;
-}
-#download{
-  display:block;
-  margin-top:15px;
-  color:#4CAF50;
-  font-weight:bold;
-}
-.content{
-  margin-top:25px;
-  font-size:14px;
-  line-height:1.6;
-}
-.ad-box{
-  background:#000;
-  margin:15px 0;
-  padding:15px;
-  text-align:center;
-}
-
-/* ANIMATIONS */
-.fade-in{
-  animation:fade 1s ease forwards;
-}
-@keyframes fade{
-  from{opacity:0; transform:translateY(10px);}
-  to{opacity:1; transform:translateY(0);}
-}
-.glow{
-  text-shadow:0 0 5px #4CAF50,0 0 12px #4CAF50;
-  animation:pulse 2s infinite alternate;
-}
-@keyframes pulse{
-  from{opacity:.6;}
-  to{opacity:1;}
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Image to PDF – Wexla Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com"></script>
+    <style>/* Same Premium Styles as above */</style>
 </head>
-
 <body>
-
-<div class="container fade-in">
-<a class="back" href="index.html">← Back</a>
-
-<div class="ad-box">Ad Space</div>
-
-<div class="tool-box fade-in">
-<h1 class="glow">Image to PDF Converter</h1>
-<p>Convert multiple images into one PDF instantly. Files stay on your device.</p>
-
-<input type="file" id="img" accept="image/*" multiple>
-<button onclick="makePDF()">Convert to PDF</button>
-<a id="download"></a>
-</div>
-
-<div class="content fade-in">
-<h2>Why use Wexla Image to PDF?</h2>
-<ul>
-<li>100% free & secure</li>
-<li>No upload to server</li>
-<li>Fast PDF generation</li>
-<li>Mobile & desktop friendly</li>
-</ul>
-
-<h2>How it works</h2>
-<p>Select images, click Convert and download your PDF instantly.</p>
-</div>
-
-<div class="ad-box">Ad Space</div>
-</div>
-
-<!-- jsPDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script>
-async function makePDF(){
- const files=document.getElementById("img").files;
- if(!files.length) return alert("Please select images");
-
- const { jsPDF } = window.jspdf;
- const pdf=new jsPDF();
-
- for(let i=0;i<files.length;i++){
-  const data=await read(files[i]);
-  const img=new Image();
-  img.src=data;
-  await new Promise(r=>img.onload=r);
-
-  const w=pdf.internal.pageSize.getWidth();
-  const h=img.height*w/img.width;
-
-  if(i>0) pdf.addPage();
-  pdf.addImage(img,"JPEG",0,0,w,h);
- }
-
- const a=document.getElementById("download");
- a.href=pdf.output("bloburl");
- a.download="images.pdf";
- a.innerText="Download PDF";
-}
-
-function read(f){
- return new Promise(r=>{
-  const fr=new FileReader();
-  fr.onload=()=>r(fr.result);
-  fr.readAsDataURL(f);
- });
-}
-</script>
-
+    <div class="tool-card">
+        <h2 style="background: linear-gradient(to right, #00f2ff, #ff00cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🖼️ Image to PDF</h2>
+        <input type="file" id="imgInp" accept="image/*">
+        <button onclick="makePDF()">Convert to PDF</button>
+        <p id="msg" style="margin-top:10px; color:#00f2ff;"></p>
+    </div>
+    <script>
+        function makePDF() {
+            const inp = document.getElementById('imgInp').files[0];
+            if(!inp) return alert("Select an image!");
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = function() {
+                    doc.addImage(img, 'JPEG', 10, 10, 190, 150);
+                    doc.save("Wexla_Converted.pdf");
+                    document.getElementById('msg').innerText = "Successfully Downloaded!";
+                }
+            };
+            reader.readAsDataURL(inp);
+        }
+    </script>
 </body>
 </html>

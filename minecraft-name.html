@@ -1,40 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Minecraft Name Generator – Wexla</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Minecraft Names – Wexla Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #090a0f; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .tool-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); padding: 40px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
+        h2 { background: linear-gradient(to right, #00f2ff, #ff00cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        button { background: linear-gradient(45deg, #00f2ff, #ff00cc); border: none; color: white; padding: 12px; border-radius: 25px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1.1rem; }
+        .name-display { font-size: 2rem; margin: 30px 0; color: #00f2ff; letter-spacing: 2px; }
+    </style>
 </head>
 <body>
-
-<div class="container fade">
-<a class="back" href="index.html">← Back</a>
-
-<div class="tool-box glow">
-<h2>Minecraft Name Generator</h2>
-<button onclick="gen()">Generate Name</button>
-<h3 id="name"></h3>
-</div>
-</div>
+    <div class="tool-card">
+        <h2>🎮 Name Generator</h2>
+        <div class="name-display" id="name">Click to Generate</div>
+        <button onclick="gen()">Generate Random Name</button>
+    </div>
+    <script>
+        function gen(){
+            const list = ["ShadowSlayer", "EndermanPro", "CreeperKing", "BlockMaster", "VoidWalker", "DiamondDigger"];
+            document.getElementById("name").innerText = list[Math.floor(Math.random()*list.length)];
+        }
+    </script>
+</body>
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress"></div>
 
 <script>
-function gen(){
- const a=["Creeper","Miner","PvP","Craft","Ender","Knight","Pro"];
- document.getElementById("name").innerText=
- a[Math.floor(Math.random()*a.length)] +
- Math.floor(Math.random()*9999);
-}
+window.onscroll = function() {
+    // Update Progress Bar
+    let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrolled = (winScroll / height) * 100;
+    document.getElementById("scroll-progress").style.width = scrolled + "%";
+
+    // Reveal Sections on Scroll
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(sec => {
+        const secTop = sec.getBoundingClientRect().top;
+        if (secTop < window.innerHeight - 100) {
+            sec.classList.add('show');
+        }
+    });
+};
+
+// Initial check to show top sections on load
+window.onload = () => window.onscroll();
 </script>
-<!-- AdsTerra Native Ad : START -->
-<div class="native-ad-wrapper" style="max-width:100%; margin:20px auto; text-align:center;">
-  
-  <script async data-cfasync="false"
-    src="https://pl28407197.effectivegatecpm.com/f99e16b420320c5099191f01bb437d94/invoke.js">
-  </script>
-  
-  <div id="container-f99e16b420320c5099191f01bb437d94"></div>
 
-</div>
-<!-- AdsTerra Native Ad : END -->
-
-</body>
 </html>
+  

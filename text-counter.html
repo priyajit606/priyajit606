@@ -31,3 +31,35 @@ function count(){
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Counter – Wexla Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #090a0f; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .tool-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; width: 100%; max-width: 600px; }
+        h2 { text-align: center; background: linear-gradient(to right, #00f2ff, #ff00cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        textarea { width: 100%; height: 200px; padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; box-sizing: border-box; }
+        .stats { display: flex; justify-content: space-around; margin-top: 20px; font-weight: bold; color: #00f2ff; }
+    </style>
+</head>
+<body>
+    <div class="tool-card">
+        <h2>📝 Text Counter</h2>
+        <textarea id="txt" oninput="count()" placeholder="Paste your text here..."></textarea>
+        <div class="stats">
+            <span>Characters: <span id="char">0</span></span>
+            <span>Words: <span id="word">0</span></span>
+        </div>
+    </div>
+    <script>
+        function count(){
+            let v = document.getElementById("txt").value;
+            document.getElementById("char").innerText = v.length;
+            document.getElementById("word").innerText = v.trim().split(/\s+/).filter(x => x.length > 0).length;
+        }
+    </script>
+</body>
+</html>

@@ -1,46 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Age Calculator Online – Free & Accurate | Wexla Tools</title>
-<meta name="description" content="Calculate your age online quickly and accurately. Free age calculator based on your birthdate. Easy to use.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Age Calculator – Wexla Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #090a0f; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .tool-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); padding: 40px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
+        h2 { background: linear-gradient(to right, #00f2ff, #ff00cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        input { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 10px; border: none; background: rgba(255,255,255,0.1); color: white; cursor: pointer; }
+        button { background: linear-gradient(45deg, #00f2ff, #ff00cc); border: none; color: white; padding: 12px; border-radius: 25px; cursor: pointer; font-weight: bold; width: 100%; }
+        .result { margin-top: 25px; font-size: 1.5rem; color: #00f2ff; font-weight: bold; text-shadow: 0 0 10px #00f2ff; }
+    </style>
 </head>
-
 <body>
-<div class="container fade">
-<a class="back" href="index.html">← Back</a>
-
-<div class="tool-box glow">
-<h2>📅 Age Calculator</h2>
-
-<input class="input" type="date" id="dob">
-<button class="btn" onclick="calc()">Calculate Age</button>
-
-<p class="output" id="res"></p>
-</div>
-</div>
-
-<script>
-function calc(){
- let dob=new Date(dob.value);
- let diff=Date.now()-dob.getTime();
- let age=new Date(diff).getUTCFullYear()-1970;
- res.innerText="Your Age: "+age+" years";
-}
-</script>
-<!-- AdsTerra Native Ad : START -->
-<div class="native-ad-wrapper" style="max-width:100%; margin:20px auto; text-align:center;">
-  
-  <script async data-cfasync="false"
-    src="https://pl28407197.effectivegatecpm.com/f99e16b420320c5099191f01bb437d94/invoke.js">
-  </script>
-  
-  <div id="container-f99e16b420320c5099191f01bb437d94"></div>
-
-</div>
-<!-- AdsTerra Native Ad : END -->
-
+    <div class="tool-card">
+        <h2>📊 Age Calculator</h2>
+        <input type="date" id="dob">
+        <button onclick="calc()">Calculate Age</button>
+        <div class="result" id="res"></div>
+    </div>
+    <script>
+        function calc(){
+            let d = new Date(document.getElementById("dob").value);
+            if(!d.getTime()) return;
+            let age = Math.floor((new Date() - d) / (1000 * 60 * 60 * 24 * 365.25));
+            document.getElementById("res").innerText = age + " Years Old";
+        }
+    </script>
 </body>
 </html>

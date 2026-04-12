@@ -1,64 +1,49 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Image Compressor Online – Free & Fast | Wexla Tools</title>
-    <meta name="description" content="Compress your images online for free. Fast, easy & secure. Supports JPG, PNG and more.">
-</head>
-
-<link rel="stylesheet" href="style.css">
+    <title>Image Compressor – Wexla Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: radial-gradient(circle, #1b2735 0%, #090a0f 100%); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://www.transparenttextures.com'); opacity: 0.3; z-index: -1; }
+        .tool-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); padding: 40px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .back-link { position: absolute; top: 20px; left: 20px; color: #00f2ff; text-decoration: none; font-weight: bold; }
+        h2 { background: linear-gradient(to right, #00f2ff, #ff00cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px; }
+        input[type="file"] { margin-bottom: 20px; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; width: 100%; }
+        button { background: linear-gradient(45deg, #00f2ff, #ff00cc); border: none; color: white; padding: 12px 30px; border-radius: 25px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
+        button:hover { transform: scale(1.05); box-shadow: 0 0 20px #00f2ff; }
+        #down { display: block; margin-top: 20px; color: #ff00cc; text-decoration: none; font-weight: bold; }
+    </style>
 </head>
 <body>
-
-<div class="container">
-<a class="back" href="index.html">← Back</a>
-
-<div class="ad-box">Ad Space</div>
-
-<div class="tool-box">
-<h2>Image Compressor</h2>
-<input type="file" id="img">
-<button onclick="compress()">Compress</button>
-<a id="down"></a>
-</div>
-
-<div class="ad-box">Ad Space</div>
-</div>
-
-<canvas id="c" style="display:none"></canvas>
-
-<script>
-function compress(){
- let f=document.getElementById("img").files[0];
- let img=new Image();
- img.src=URL.createObjectURL(f);
- img.onload=()=>{
-  let c=document.getElementById("c");
-  c.width=img.width; c.height=img.height;
-  let x=c.getContext("2d");
-  x.drawImage(img,0,0);
-  c.toBlob(b=>{
-    let a=document.getElementById("down");
-    a.href=URL.createObjectURL(b);
-    a.download="compressed.jpg";
-    a.innerText="Download";
-  },"image/jpeg",0.6);
- }
-}
-</script>
-<!-- AdsTerra Native Ad : START -->
-<div class="native-ad-wrapper" style="max-width:100%; margin:20px auto; text-align:center;">
-  
-  <script async data-cfasync="false"
-    src="https://pl28407197.effectivegatecpm.com/f99e16b420320c5099191f01bb437d94/invoke.js">
-  </script>
-  
-  <div id="container-f99e16b420320c5099191f01bb437d94"></div>
-
-</div>
-<!-- AdsTerra Native Ad : END -->
-
-
+    <a class="back-link" href="index.html">← Back to Wexla</a>
+    <div class="tool-card">
+        <h2>🖼️ Image Compressor</h2>
+        <input type="file" id="img" accept="image/*">
+        <button onclick="compress()">Compress Image</button>
+        <a id="down"></a>
+    </div>
+    <canvas id="c" style="display:none"></canvas>
+    <script>
+        function compress(){
+            let f=document.getElementById("img").files[0];
+            if(!f) return alert("Select an image first!");
+            let img=new Image();
+            img.src=URL.createObjectURL(f);
+            img.onload=()=>{
+                let c=document.getElementById("c");
+                c.width=img.width; c.height=img.height;
+                let x=c.getContext("2d");
+                x.drawImage(img,0,0);
+                c.toBlob(b=>{
+                    let a=document.getElementById("down");
+                    a.href=URL.createObjectURL(b);
+                    a.download="compressed_wexla.jpg";
+                    a.innerText="Download Compressed Image ↓";
+                },"image/jpeg",0.6);
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,81 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Notice Writer Online – Free Template Tool | Wexla Tools</title>
-<meta name="description" content="Write professional notices online for free. Perfect for schools, offices, and events. Quick and easy templates.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Notice Writer – Wexla Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #090a0f; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; width: 100%; max-width: 500px; text-align: center; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #444; background: #111; color: white; box-sizing: border-box; }
+        button { background: linear-gradient(45deg,#00f2ff,#ff00cc); border: none; color: white; padding: 15px; width: 100%; border-radius: 30px; cursor: pointer; font-weight: bold; }
+        .notice-box { margin-top: 30px; border: 2px solid white; padding: 20px; color: black; background: white; text-align: center; display: none; }
+    </style>
 </head>
-
 <body>
-<div class="container fade">
-<a class="back" href="index.html">← Back</a>
+    <div class="card">
+        <h2>📢 Notice Writer</h2>
+        <input id="org" placeholder="School/Institution Name">
+        <input id="topic" placeholder="Topic">
+        <textarea id="msg" placeholder="Content..."></textarea>
+        <button onclick="gen()">Generate Notice</button>
 
-<div class="tool-box glow">
-<h2>📢 Notice Writer</h2>
-
-<input class="input" id="org" placeholder="School / Organization Name">
-<input class="input" id="date" placeholder="Date">
-
-<select class="input" id="subMode">
-  <option value="auto">Auto Subject</option>
-  <option value="manual">Manual Subject</option>
-</select>
-
-<input class="input" id="subject" placeholder="Enter Notice Subject">
-
-<textarea class="input" id="msg"
-placeholder="Write the notice content properly (example: All the students are hereby informed that...)"></textarea>
-
-<button class="btn" onclick="gen()">Generate Notice</button>
-
-<pre class="output" id="out"></pre>
-</div>
-</div>
-
-<script>
-function gen(){
-
-let org = document.getElementById("org").value || "________";
-let date = document.getElementById("date").value || "________";
-let msg  = document.getElementById("msg").value || 
-"All concerned are hereby informed that an important event has been scheduled.";
-
-let subjectText;
-if(document.getElementById("subMode").value==="manual" && subject.value){
-  subjectText = subject.value;
-}else{
-  subjectText = "Important Notice";
-}
-
-out.innerText =
-`NOTICE
-
-${org}
-Date: ${date}
-
-Subject: ${subjectText}
-
-${msg}
-
-All are requested to take note of the above information and act accordingly.
-
-By Order
-Authority`;
-}
-</script>
-<!-- AdsTerra Native Ad : START -->
-<div class="native-ad-wrapper" style="max-width:100%; margin:20px auto; text-align:center;">
-  
-  <script async data-cfasync="false"
-    src="https://pl28407197.effectivegatecpm.com/f99e16b420320c5099191f01bb437d94/invoke.js">
-  </script>
-  
-  <div id="container-f99e16b420320c5099191f01bb437d94"></div>
-
-</div>
-<!-- AdsTerra Native Ad : END -->
-
+        <div id="box" class="notice-box">
+            <b id="o"></b><br>NOTICE<br>
+            <div style="text-align:right" id="d"></div><br>
+            <u id="t"></u><br><br>
+            <div id="m" style="text-align:left"></div><br>
+            <div style="text-align:left"><b>Authority</b></div>
+        </div>
+    </div>
+    <script>
+        function gen(){
+            document.getElementById('o').innerText = document.getElementById('org').value.toUpperCase();
+            document.getElementById('t').innerText = document.getElementById('topic').value.toUpperCase();
+            document.getElementById('m').innerText = document.getElementById('msg').value;
+            document.getElementById('d').innerText = "Date: " + new Date().toLocaleDateString();
+            document.getElementById('box').style.display = "block";
+        }
+    </script>
 </body>
 </html>

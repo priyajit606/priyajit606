@@ -1,89 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Letter Writer Online – Free & Easy | Wexla Tools</title>
-<meta name="description" content="Create formal and informal letters online for free. Simple and easy-to-use letter writing tool for all occasions.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Letter Writer – Wexla Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #090a0f; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .tool-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; width: 100%; max-width: 600px; }
+        h2 { text-align: center; background: linear-gradient(to right, #00f2ff, #ff00cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; box-sizing: border-box; }
+        textarea { height: 120px; resize: vertical; }
+        button { background: linear-gradient(45deg, #00f2ff, #ff00cc); border: none; color: white; padding: 15px; border-radius: 30px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
+        .output { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; margin-top: 20px; white-space: pre-wrap; border-left: 4px solid #ff00cc; }
+        .back-link { position: absolute; top: 20px; left: 20px; color: #00f2ff; text-decoration: none; }
+    </style>
 </head>
-
 <body>
-<div class="container fade">
-<a class="back" href="index.html">← Back</a>
-
-<div class="tool-box glow">
-<h2>✉️ Letter Writer</h2>
-
-<select class="input" id="type">
-  <option value="friend">Letter to Friend</option>
-  <option value="teacher">Letter to Teacher</option>
-  <option value="custom">Custom Letter</option>
-</select>
-
-<input class="input" id="name" placeholder="Your Name">
-
-<select class="input" id="subMode">
-  <option value="auto">Auto Subject</option>
-  <option value="manual">Manual Subject</option>
-</select>
-
-<input class="input" id="subject" placeholder="Enter Subject (if manual)">
-
-<textarea class="input" id="body"
-placeholder="Write the main content in detail (example: I hope you are fine. I am writing this letter to inform you about...)"></textarea>
-
-<button class="btn" onclick="gen()">Generate Letter</button>
-
-<pre class="output" id="out"></pre>
-</div>
-</div>
-
-<script>
-function gen(){
-
-let type = document.getElementById("type").value;
-let name = document.getElementById("name").value || "________";
-let body = document.getElementById("body").value || "I am writing this letter to share some important information with you.";
-
-let subjectText;
-if(document.getElementById("subMode").value==="manual" && subject.value){
-  subjectText = subject.value;
-}else{
-  subjectText = type==="friend"
-  ? "Friendly Letter"
-  : "Formal Letter";
-}
-
-let greeting = type==="friend" ? "Dear Friend," : "Respected Sir/Madam,";
-
-out.innerText =
-`Subject: ${subjectText}
-
-${greeting}
-
-I hope this letter finds you in good health and high spirits.
-${body}
-
-I hope you will understand my situation and give your kind consideration.
-
-Thanking you.
-
-Yours sincerely,
-${name}`;
-}
-</script>
-<!-- AdsTerra Native Ad : START -->
-<div class="native-ad-wrapper" style="max-width:100%; margin:20px auto; text-align:center;">
-  
-  <script async data-cfasync="false"
-    src="https://pl28407197.effectivegatecpm.com/f99e16b420320c5099191f01bb437d94/invoke.js">
-  </script>
-  
-  <div id="container-f99e16b420320c5099191f01bb437d94"></div>
-
-</div>
-<!-- AdsTerra Native Ad : END -->
-
+    <a class="back-link" href="index.html">← Back</a>
+    <div class="tool-card">
+        <h2>✉️ Letter Writer</h2>
+        <select class="input" id="type">
+            <option value="friend">Letter to Friend</option>
+            <option value="teacher">Letter to Teacher</option>
+            <option value="custom">Custom Letter</option>
+        </select>
+        <input class="input" id="name" placeholder="Your Name">
+        <input class="input" id="subject" placeholder="Subject">
+        <textarea class="input" id="body" placeholder="Main content..."></textarea>
+        <button onclick="gen()">Generate Premium Letter</button>
+        <div class="output" id="out">Your letter will appear here...</div>
+    </div>
+    <script>
+        function gen(){
+            let type = document.getElementById("type").value;
+            let name = document.getElementById("name").value || "Your Name";
+            let sub = document.getElementById("subject").value || "Subject";
+            let body = document.getElementById("body").value || "Content details...";
+            let greeting = type==="friend" ? "Dear Friend," : "Respected Sir/Madam,";
+            document.getElementById("out").innerText = `Subject: ${sub}\n\n${greeting}\n\n${body}\n\nYours sincerely,\n${name}`;
+        }
+    </script>
 </body>
 </html>

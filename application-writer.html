@@ -1,99 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Application Writer Online – Create Letters Free | Wexla Tools</title>
-<meta name="description" content="Write professional applications online for free. Easy templates for job, leave, school, or college applications.">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Application Writer – Wexla Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: radial-gradient(circle, #1b2735 0%, #090a0f 100%); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://www.transparenttextures.com'); opacity: 0.3; z-index: -1; }
+        .tool-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; width: 100%; max-width: 600px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .back-link { position: absolute; top: 20px; left: 20px; color: #00f2ff; text-decoration: none; font-weight: bold; }
+        h2 { text-align: center; background: linear-gradient(to right, #00f2ff, #ff00cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+        .input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; box-sizing: border-box; outline: none; }
+        textarea { height: 120px; resize: vertical; }
+        button { background: linear-gradient(45deg, #00f2ff, #ff00cc); border: none; color: white; padding: 15px; border-radius: 30px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; transition: 0.3s; }
+        button:hover { transform: scale(1.02); box-shadow: 0 0 20px #00f2ff; }
+        .output { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; margin-top: 20px; white-space: pre-wrap; border-left: 4px solid #ff00cc; font-size: 0.9rem; line-height: 1.5; }
+    </style>
 </head>
-
 <body>
-<div class="container fade">
-<a class="back" href="index.html">← Back</a>
-
-<div class="tool-box glow">
-<h2 class="glow-text">📝 Application Writer</h2>
-
-<select class="input" id="type">
-  <option value="leave">Leave Application</option>
-  <option value="sick">Sick Leave Application</option>
-  <option value="custom">Custom Application</option>
-</select>
-
-<input class="input" id="name" placeholder="Your Name">
-<input class="input" id="cls" placeholder="Class / Designation">
-<input class="input" id="school" placeholder="School / Office Name">
-
-<select class="input" id="subMode">
-  <option value="auto">Auto Subject</option>
-  <option value="manual">Manual Subject</option>
-</select>
-
-<input class="input" id="subject" placeholder="Enter Subject (if manual)">
-
-<textarea class="input" id="reason"
-placeholder="Write the reason properly (example: I am suffering from stomach pain and the doctor has advised me to take rest.)"></textarea>
-
-<button class="btn" onclick="gen()">Generate Application</button>
-
-<pre class="output" id="out"></pre>
-</div>
-</div>
-
-<script>
-function gen(){
-
-let type = document.getElementById("type").value;
-let name = document.getElementById("name").value || "________";
-let cls  = document.getElementById("cls").value || "________";
-let school = document.getElementById("school").value || "________";
-let reason = document.getElementById("reason").value || "some personal reasons";
-
-let subjectText;
-if(document.getElementById("subMode").value==="manual" && subject.value){
-  subjectText = subject.value;
-}else{
-  subjectText = type==="sick"
-  ? "Application for Sick Leave"
-  : "Application for Leave";
-}
-
-out.innerText =
-`To,
-The Principal,
-${school}
-
-Subject: ${subjectText}
-
-Respected Sir/Madam,
-
-I respectfully state that I am ${name}, a student of class ${cls} of your esteemed institution.
-I am writing this application to inform you that ${reason}
-
-Due to the above-mentioned reason, I will not be able to attend my classes for the mentioned period.
-Therefore, I kindly request you to grant me leave for the same.
-
-I shall be very thankful to you for your kind consideration.
-
-Thanking you.
-
-Yours obediently,
-${name}
-Class: ${cls}`;
-}
-</script>
-<!-- AdsTerra Native Ad : START -->
-<div class="native-ad-wrapper" style="max-width:100%; margin:20px auto; text-align:center;">
-  
-  <script async data-cfasync="false"
-    src="https://pl28407197.effectivegatecpm.com/f99e16b420320c5099191f01bb437d94/invoke.js">
-  </script>
-  
-  <div id="container-f99e16b420320c5099191f01bb437d94"></div>
-
-</div>
-<!-- AdsTerra Native Ad : END -->
-
+    <a class="back-link" href="index.html">← Back</a>
+    <div class="tool-card">
+        <h2>📝 Application Writer</h2>
+        <input class="input" id="to" placeholder="To (e.g. The Principal / Manager)">
+        <input class="input" id="sub" placeholder="Subject of Application">
+        <textarea class="input" id="reason" placeholder="Reason/Body of application..."></textarea>
+        <input class="input" id="sender" placeholder="Your Name">
+        <button onclick="genApp()">Generate Application</button>
+        <div class="output" id="out">Your application will appear here...</div>
+    </div>
+    <script>
+        function genApp(){
+            let to = document.getElementById("to").value || "The Authority";
+            let sub = document.getElementById("sub").value || "Leave Application";
+            let reason = document.getElementById("reason").value || "I am writing to request...";
+            let sender = document.getElementById("sender").value || "Your Name";
+            let date = new Date().toLocaleDateString();
+            document.getElementById("out").innerText = `To,\n${to}\n\nDate: ${date}\n\nSubject: ${sub}\n\nRespected Sir/Madam,\n\nWith due respect, I want to state that ${reason}\n\nI hope you will consider my request.\n\nYours faithfully,\n${sender}`;
+        }
+    </script>
 </body>
 </html>

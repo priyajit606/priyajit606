@@ -1,60 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Image Resizer Online – Resize Images Free | Wexla Tools</title>
-<meta name="description" content="Resize your images online quickly and easily. Adjust width, height and quality for free. Supports JPG, PNG, GIF.">
-
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Image Resizer – Wexla Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Same Premium CSS Style as above */
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #090a0f; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .tool-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); padding: 40px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
+        h2 { background: linear-gradient(to right, #00f2ff, #ff00cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; box-sizing: border-box; }
+        button { background: linear-gradient(45deg, #00f2ff, #ff00cc); border: none; color: white; padding: 12px; border-radius: 25px; cursor: pointer; font-weight: bold; width: 100%; }
+        .back-link { position: absolute; top: 20px; left: 20px; color: #00f2ff; text-decoration: none; }
+    </style>
 </head>
 <body>
-
-<div class="container">
-<a class="back" href="index.html">← Back</a>
-
-<div class="tool-box">
-<h2>Image Resizer</h2>
-<input type="file" id="img">
-<input type="number" id="w" placeholder="Width">
-<input type="number" id="h" placeholder="Height">
-<button onclick="resize()">Resize</button>
-<a id="down"></a>
-</div>
-</div>
-
-<canvas id="c" style="display:none"></canvas>
-
-<script>
-function resize(){
- let f=document.getElementById("img").files[0];
- let w=document.getElementById("w").value;
- let h=document.getElementById("h").value;
- let img=new Image();
- img.src=URL.createObjectURL(f);
- img.onload=()=>{
-  let c=document.getElementById("c");
-  c.width=w; c.height=h;
-  c.getContext("2d").drawImage(img,0,0,w,h);
-  c.toBlob(b=>{
-    let a=document.getElementById("down");
-    a.href=URL.createObjectURL(b);
-    a.download="resized.jpg";
-    a.innerText="Download";
-  },"image/jpeg",0.9);
- }
-}
-</script>
-<!-- AdsTerra Native Ad : START -->
-<div class="native-ad-wrapper" style="max-width:100%; margin:20px auto; text-align:center;">
-  
-  <script async data-cfasync="false"
-    src="https://pl28407197.effectivegatecpm.com/f99e16b420320c5099191f01bb437d94/invoke.js">
-  </script>
-  
-  <div id="container-f99e16b420320c5099191f01bb437d94"></div>
-
-</div>
-<!-- AdsTerra Native Ad : END -->
-
-
+    <a class="back-link" href="index.html">← Back</a>
+    <div class="tool-card">
+        <h2>📏 Image Resizer</h2>
+        <input type="file" id="img">
+        <input type="number" id="w" placeholder="Width (px)">
+        <input type="number" id="h" placeholder="Height (px)">
+        <button onclick="resize()">Resize Now</button>
+        <a id="down" style="display:block; margin-top:15px; color:#ff00cc; text-decoration:none;"></a>
+    </div>
+    <canvas id="c" style="display:none"></canvas>
+    <script>
+        function resize(){
+            let f=document.getElementById("img").files[0];
+            let w=document.getElementById("w").value;
+            let h=document.getElementById("h").value;
+            if(!f || !w || !h) return alert("Fill all fields!");
+            let img=new Image();
+            img.src=URL.createObjectURL(f);
+            img.onload=()=>{
+                let c=document.getElementById("c");
+                c.width=w; c.height=h;
+                c.getContext("2d").drawImage(img,0,0,w,h);
+                c.toBlob(b=>{
+                    let a=document.getElementById("down");
+                    a.href=URL.createObjectURL(b);
+                    a.download="resized_wexla.jpg";
+                    a.innerText="Download Resized Image ↓";
+                },"image/jpeg",0.9);
+            }
+        }
+    </script>
 </body>
 </html>
