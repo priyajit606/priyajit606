@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Wexla – Tools & Shop</title>
+    <title>Wexla – Tools & Games</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         body {
             margin: 0;
@@ -21,7 +21,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://www.transparenttextures.com');
+            background-image: url('https://transparenttextures.com');
             z-index: -1;
             opacity: 0.3;
         }
@@ -136,7 +136,7 @@
         </svg>
     </div>
 
-    <audio id="hover-click" src="https://www.soundjay.com"></audio>
+    <audio id="hover-click" src="https://soundjay.com"></audio>
 
     <div class="cart-trigger" id="cart-btn" onclick="toggleCart(event)">
         <i class="fas fa-shopping-basket"></i>
@@ -163,33 +163,13 @@
             <h2 id="modal-title"></h2>
             <p id="modal-price" style="color: #00f2ff; font-size: 1.5rem; font-weight: bold;"></p>
             <p id="modal-desc" style="opacity: 0.8;"></p>
-            <button class="buy-btn" id="modal-add-btn">Add to Bag</button>
+            <button class="buy-btn" id="modal-add-btn">Play Now 🎮</button>
         </div>
     </div>
 
     <div class="container">
-        <header><h1 class="glow-text">Wexla</h1><p style="text-align:center; opacity:0.7;" id="welcome-msg">Premium Tools & Shop</p></header>
+        <header><h1 class="glow-text">Wexla</h1><p style="text-align:center; opacity:0.7;" id="welcome-msg">Premium Tools & Games</p></header>
         <input type="text" class="search" placeholder="Search Wexla..." onkeyup="search()">
-
-        <!-- RESTORED SHOP SECTION -->
-        <div class="section slide-left">
-            <h2 style="border-left: 4px solid #00f2ff; padding-left:10px;">🛍️ Shop</h2>
-            <div class="grid">
-                <div class="shop-card" onclick="openProduct('💎', 'VIP Pass', 9.99, 'Access secret tools and remove ads.')">
-                    <div>💎</div><h4>VIP Pass</h4><p>$9.99</p> <button class="buy-btn">View Details</button>
-                </div>
-                <div class="shop-card" onclick="openProduct('⚡', 'Fast Pro', 4.50, 'Unlock ultra-fast server speeds.')">
-                    <div>⚡</div><h4>Fast Pro</h4><p>$4.50</p> <button class="buy-btn">View Details</button>
-                </div>
-                <div class="shop-card" onclick="openProduct('🔥', 'Elite Kit', 15.00, 'The ultimate tool bundle.')">
-                    <div>🔥</div><h4>Elite Kit</h4><p>$15.00</p> <button class="buy-btn">View Details</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" style="text-align:center; margin: 40px 0;">
-            <a href="shop.html" class="rgb-pulse" onmouseenter="playSfx()">See More Products <i class="fas fa-arrow-right"></i></a>
-        </div>
 
         <div class="tool-box">
             <!-- RESTORED ALL IMAGE TOOLS -->
@@ -241,6 +221,25 @@
             </div>
         </div>
 
+        <!-- NEW GAMES SECTION AT THE BOTTOM -->
+        <div class="section slide-right">
+            <h2 style="border-left: 4px solid #00f2ff; padding-left:10px;">🎮 Games</h2>
+            <div class="grid">
+                <div class="shop-card" onclick="openProduct('🐍', 'Snake Game', 0.00, 'Classic Nokia snake game. Control the snake and eat the food!')">
+                    <div>🐍</div><h4>Snake Game</h4><p>Free</p> <button class="buy-btn">Play Now</button>
+                </div>
+                <div class="shop-card" onclick="openProduct('🏎️', 'Car Racing', 0.00, 'Dodge the incoming traffic and drive as fast as you can!')">
+                    <div>🏎️</div><h4>Car Racing</h4><p>Free</p> <button class="buy-btn">Play Now</button>
+                </div>
+                <div class="shop-card" onclick="openProduct('🐦', 'Flappy Bird', 0.00, 'Tap to flap your wings and fly through the pipes!')">
+                    <div>🐦</div><h4>Flappy Bird</h4><p>Free</p> <button class="buy-btn">Play Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" style="text-align:center; margin: 40px 0;">
+            <a href="shop.html" class="rgb-pulse" onmouseenter="playSfx()">See More Games <i class="fas fa-arrow-right"></i></a>
+        </div>
         <footer style="text-align:center; padding:40px; opacity:0.4;">© 2026 Wexla</footer>
     </div>
 
@@ -274,7 +273,7 @@
             }
         });
 
-        // --- RESTORED ORIGINAL JS ---
+        // --- MODERN RE-PURPOSED LOGIC FOR GAMES ---
         let cart = [];
         function toggleCart(e) { if(e) e.stopPropagation(); document.getElementById('sidebar').classList.toggle('open'); }
         document.addEventListener('click', (e) => {
@@ -286,19 +285,19 @@
         function openProduct(icon, title, price, desc) {
             document.getElementById('modal-icon').innerText = icon;
             document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-price').innerText = "$" + price;
+            document.getElementById('modal-price').innerText = "Free To Play";
             document.getElementById('modal-desc').innerText = desc;
+            
+            const actionBtn = document.getElementById('modal-add-btn');
+            actionBtn.innerText = "Play Now 🎮";
+            
+            let gameLink = title.toLowerCase().replace(" ", "-") + ".html";
+            actionBtn.onclick = () => { window.location.href = gameLink; };
+            
             document.getElementById('productModal').style.display = "block";
-            document.getElementById('modal-add-btn').onclick = () => { add(title, price); closeModal(); };
         }
 
         function closeModal() { document.getElementById('productModal').style.display = "none"; }
-
-        function add(n,p) {
-            cart.push({n,p, id: Date.now()});
-            updateCartUI();
-            document.getElementById('sidebar').classList.add('open');
-        }
 
         function removeItem(id) { cart = cart.filter(item => item.id !== id); updateCartUI(); }
 
