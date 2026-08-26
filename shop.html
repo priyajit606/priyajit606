@@ -2,259 +2,261 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Wexla - Elite Shopping</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Added FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <title>Wexla Arcade - Snake Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        body { margin: 0; background: #050505; color: white; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
-        .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000 100%); z-index: -1; }
-        .glass-nav { padding: 20px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; }
-        .cart-trigger { position: fixed; top: 85px; right: 15px; background: linear-gradient(45deg, #00f2ff, #ff00cc); color: white; padding: 10px 18px; border-radius: 30px; z-index: 1000; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(0, 242, 255, 0.5); font-weight: bold; border: none; }
-        .sidebar { position: fixed; top: 0; right: -100%; width: 80%; max-width: 350px; height: 100%; background: rgba(10,15,25,0.98); backdrop-filter: blur(25px); z-index: 2000; transition: 0.4s; padding: 25px; overflow-y: auto; box-shadow: -10px 0 30px rgba(0,0,0,0.5); }
-        .sidebar.open { right: 0; }
-        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); }
-        .modal-content { background: rgba(255,255,255,0.05); margin: 10% auto; padding: 30px; border: 1px solid #00f2ff; border-radius: 20px; width: 80%; max-width: 450px; text-align: center; }
-        .shop-section { opacity: 0; transition: 0.8s ease; }
-        .slide-left { transform: translateX(-100px); }
-        .slide-right { transform: translateX(100px); }
-        .reveal-active { opacity: 1 !important; transform: translateX(0) !important; }
-        .premium-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px; text-align: center; transition: 0.4s; cursor: pointer; }
-        .premium-card:hover { transform: scale(1.05); border-color: #ff00cc; }
-        .price-tag { color: #00f2ff; font-weight: bold; margin-bottom: 15px; font-size: 1.2rem; }
-        .buy-now-glow { background: linear-gradient(90deg, #ff00cc, #3333ff); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; }
+        body {
+            margin: 0;
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .header {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+        .back-btn:hover { border-color: #00f2ff; box-shadow: 0 0 10px #00f2ff; }
+        .score-board {
+            display: flex;
+            gap: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px #ff00cc;
+        }
+        #score { color: #00f2ff; }
+        #highScore { color: #ffd700; }
+        
+        .game-container {
+            position: relative;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #00f2ff;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.3);
+            overflow: hidden;
+        }
+        canvas { display: block; background: #0b0f19; }
+        
+        /* Mobile Touch Controls */
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(3, 60px);
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        @media (min-width: 600px) { .controls { display: none; } }
+        .btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .btn:active { background: linear-gradient(45deg, #00f2ff, #ff00cc); border-color: transparent; }
+        #up-btn { grid-column: 2; }
+        #left-btn { grid-column: 1; grid-row: 2; }
+        #right-btn { grid-column: 3; grid-row: 2; }
+        #down-btn { grid-column: 2; grid-row: 3; }
+
+        .game-over-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .game-over-screen h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #ff00cc, #7000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .play-btn {
+            background: linear-gradient(45deg, #00f2ff, #ff00cc);
+            border: none; color: white; padding: 12px 30px;
+            border-radius: 25px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 0 15px #00f2ff; transition: 0.3s;
+        }
+        .play-btn:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
 
-<div class="bg-animation"></div>
-
-<div class="cart-trigger" id="cart-btn" onclick="toggleCart(event)">
-    <i class="fas fa-shopping-basket"></i> <span id="cart-count">0</span>
-</div>
-
-<div class="sidebar" id="sidebar">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3>My Bag</h3>
-        <i class="fas fa-times" onclick="toggleCart(event)" style="cursor:pointer; font-size: 1.5rem;"></i>
+    <div class="header">
+        <a href="shop.html" class="back-btn"><i class="fas fa-arrow-left"></i> Arcade</a>
+        <div class="score-board">
+            <div>Score: <span id="score">0</span></div>
+            <div>Best: <span id="highScore">0</span></div>
+        </div>
     </div>
-    <hr style="border: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
-    <div id="cart-items"></div>
-    <div id="cart-total-box" style="margin-top: 20px; text-align: right; color: #00f2ff; font-weight: bold; display: none;">
-        Total: $<span id="cart-total-price">0.00</span>
+
+    <div class="game-container">
+        <div class="game-over-screen" id="gameOver">
+            <h2>GAME OVER</h2>
+            <p style="margin-bottom: 20px; opacity: 0.8;">Great try! Play again?</p>
+            <button class="play-btn" onclick="resetGame()">Start Game</button>
+        </div>
+        <canvas id="gameCanvas" width="340" height="340"></canvas>
     </div>
-    <button class="buy-now-glow" style="margin-top: 30px;">Checkout</button>
-</div>
 
-<div id="productModal" class="modal">
-    <div class="modal-content">
-        <span onclick="closeModal()" style="float:right; cursor:pointer; font-size: 24px;">&times;</span>
-        <div id="modal-icon" style="font-size: 80px; margin-bottom: 10px;"></div>
-        <h2 id="modal-title"></h2>
-        <p id="modal-price" style="color: #00f2ff; font-size: 1.5rem; font-weight: bold;"></p>
-        <p id="modal-desc" style="opacity: 0.8; margin-bottom: 20px;"></p>
-        <button class="buy-now-glow" id="modal-add-btn">Add to Bag</button>
+    <div class="controls">
+        <div class="btn" id="up-btn" onclick="changeDir('UP')"><i class="fas fa-chevron-up"></i></div>
+        <div class="btn" id="left-btn" onclick="changeDir('LEFT')"><i class="fas fa-chevron-left"></i></div>
+        <div class="btn" id="right-btn" onclick="changeDir('RIGHT')"><i class="fas fa-chevron-right"></i></div>
+        <div class="btn" id="down-btn" onclick="changeDir('DOWN')"><i class="fas fa-chevron-down"></i></div>
     </div>
-</div>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
 
-<nav class="glass-nav">
-    <h2 style="margin:0; background: linear-gradient(to right, #00f2ff, #ff00cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">WEXLA STORE</h2>
-    <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;"><i class="fas fa-arrow-left"></i> Back</a>
-</nav>
+        const box = 20; // Size of grid blocks
+        let snake, food, d, score, gameInterval;
+        let highScore = localStorage.getItem("snakeHighScore") || 0;
+        document.getElementById("highScore").innerText = highScore;
 
-<div style="max-width: 1200px; margin: 50px auto; padding: 20px;">
-    <h1 style="text-align:center; font-size:3.5rem; margin-bottom: 50px;">Elite Assets</h1>
-    
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:30px;">
-        
-        <!-- 1. Dev Kit -->
-        <div class="shop-section slide-left">
-            <div class="premium-card" onclick="openProduct('📦', 'Dev Kit', 49.99, 'Full source code access.')">
-                <div style="font-size:70px">📦</div>
-                <h3>Dev Kit</h3>
-                <div class="price-tag">$49.99</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
+        // Start initialization
+        resetGame();
 
-        <!-- 2. Icons Pack -->
-        <div class="shop-section slide-right">
-            <div class="premium-card" onclick="openProduct('🎨', 'Icons Pack', 15.00, '500+ neon icons.')">
-                <div style="font-size:70px">🎨</div>
-                <h3>Icons Pack</h3>
-                <div class="price-tag">$15.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 3. Security Plus -->
-        <div class="shop-section slide-left">
-            <div class="premium-card" onclick="openProduct('🛡️', 'Security Plus', 29.00, 'Lifetime tool security updates.')">
-                <div style="font-size:70px">🛡️</div>
-                <h3>Security Plus</h3>
-                <div class="price-tag">$29.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 4. HP Printer -->
-        <div class="shop-section slide-right">
-            <div class="premium-card" onclick="openProduct('🖨️', 'HP Printer', 110.00, 'HP Printer new version.')">
-                <div style="font-size:70px">🖨️</div>
-                <h3>HP Printer</h3>
-                <div class="price-tag">$110.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 5. Wooden Chair -->
-        <div class="shop-section slide-left">
-            <div class="premium-card" onclick="openProduct('🪑', 'Wooden Chair', 20.00, 'Comfortable wooden chair.')">
-                <div style="font-size:70px">🪑</div>
-                <h3>Wooden Chair</h3>
-                <div class="price-tag">$20.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 6. Sofa -->
-        <div class="shop-section slide-right">
-            <div class="premium-card" onclick="openProduct('🛋️', 'Luxury Sofa', 1500.00, 'Sofa of 3 seats.')">
-                <div style="font-size:70px">🛋️</div>
-                <h3>Luxury Sofa</h3>
-                <div class="price-tag">$1500.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 7. Bed -->
-        <div class="shop-section slide-left">
-            <div class="premium-card" onclick="openProduct('🛏️', 'Comfortable Bed', 3451.00, 'Premium quality bed.')">
-                <div style="font-size:70px">🛏️</div>
-                <h3>Comfortable Bed</h3>
-                <div class="price-tag">$3451.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 8. Wooden Door -->
-        <div class="shop-section slide-right">
-            <div class="premium-card" onclick="openProduct('🚪', 'Wooden Door', 1345.00, 'Awesome wooden Door.')">
-                <div style="font-size:70px">🚪</div>
-                <h3>Wooden Door</h3>
-                <div class="price-tag">$1345.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 9. Mystery Box -->
-        <div class="shop-section slide-left">
-            <div class="premium-card" onclick="openProduct('🎁', 'Mystery Box', 609.00, 'A Mystery Box with prizes up to $30,000.')">
-                <div style="font-size:70px">🎁</div>
-                <h3>Mystery Box</h3>
-                <div class="price-tag">$609.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 10. HP Laptop -->
-        <div class="shop-section slide-right">
-            <div class="premium-card" onclick="openProduct('💻', 'HP Laptop', 500.00, '32GB RAM, 1TB SSD.')">
-                <div style="font-size:70px">💻</div>
-                <h3>HP Laptop</h3>
-                <div class="price-tag">$500.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 11. HP Desktop -->
-        <div class="shop-section slide-left">
-            <div class="premium-card" onclick="openProduct('🖥️', 'HP Desktop', 690.00, '32GB RAM, 1TB SSD.')">
-                <div style="font-size:70px">🖥️</div>
-                <h3>HP Desktop</h3>
-                <div class="price-tag">$690.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-        <!-- 12. Keyboard -->
-        <div class="shop-section slide-right">
-            <div class="premium-card" onclick="openProduct('⌨️', 'Ergo Keyboard', 40.00, 'Ergonomic keyboard with RGB lighting.')">
-                <div style="font-size:70px">⌨️</div>
-                <h3>Ergo Keyboard</h3>
-                <div class="price-tag">$40.00</div>
-                <button class="buy-now-glow">View Details</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<script>
-    let cart = [];
-
-    function toggleCart(e) { 
-        if(e) e.stopPropagation(); 
-        document.getElementById('sidebar').classList.toggle('open'); 
-    }
-
-    document.addEventListener('click', (e) => {
-        const s = document.getElementById('sidebar'), b = document.getElementById('cart-btn');
-        if (s.classList.contains('open') && !s.contains(e.target) && !b.contains(e.target)) s.classList.remove('open');
-    });
-
-    function openProduct(icon, title, price, desc) {
-        document.getElementById('modal-icon').innerText = icon; 
-        document.getElementById('modal-title').innerText = title;
-        document.getElementById('modal-price').innerText = "$" + price.toFixed(2); 
-        document.getElementById('modal-desc').innerText = desc;
-        document.getElementById('productModal').style.display = "block";
-        document.getElementById('modal-add-btn').onclick = () => { add(title, price); closeModal(); };
-    }
-
-    function closeModal() { document.getElementById('productModal').style.display = "none"; }
-
-    function add(n,p) { 
-        cart.push({n, p, id: Date.now()}); 
-        updateUI(); 
-        document.getElementById('sidebar').classList.add('open'); 
-    }
-
-    function remove(id) { 
-        cart = cart.filter(i => i.id !== id); 
-        updateUI(); 
-    }
-
-    function updateUI() {
-        document.getElementById('cart-count').innerText = cart.length;
-        const list = document.getElementById('cart-items'), totalBox = document.getElementById('cart-total-box');
-        if(cart.length === 0) { 
-            list.innerHTML = '<p style="opacity:0.5; text-align:center;">Bag is empty</p>'; 
-            totalBox.style.display = "none"; 
-        } else {
-            let t = 0;
-            list.innerHTML = cart.map(i => { 
-                t += i.p; 
-                return `
-                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:10px; border-radius:10px; margin-bottom:10px; border: 1px solid rgba(255,255,255,0.1);">
-                    <div><span>${i.n}</span><br><small style="color:#00f2ff">$${i.p.toFixed(2)}</small></div>
-                    <i class="fas fa-trash-alt" onclick="remove(${i.id})" style="color:#ff00cc; cursor:pointer;"></i>
-                </div>`; 
-            }).join('');
-            totalBox.style.display = "block"; 
-            document.getElementById('cart-total-price').innerText = t.toFixed(2);
+        function resetGame() {
+            document.getElementById("gameOver").style.display = "none";
+            snake = [{ x: 8 * box, y: 8 * box }];
+            generateFood();
+            d = undefined;
+            score = 0;
+            document.getElementById("score").innerText = score;
+            
+            clearInterval(gameInterval);
+            gameInterval = setInterval(draw, 130); // Speed control
         }
-    }
 
-    const obs = new IntersectionObserver((es)=>{ 
-        es.forEach(e=>{ 
-            if(e.isIntersecting) e.target.classList.add('reveal-active'); 
-            else e.target.classList.remove('reveal-active'); 
-        }); 
-    }, {threshold: 0.1});
+        function generateFood() {
+            food = {
+                x: Math.floor(Math.random() * (canvas.width / box)) * box,
+                y: Math.floor(Math.random() * (canvas.height / box)) * box
+            };
+            // Prevent food from spawning on snake's body
+            for (let cell of snake) {
+                if (cell.x === food.x && cell.y === food.y) generateFood();
+            }
+        }
 
-    document.querySelectorAll('.shop-section').forEach(s=>obs.observe(s));
-</script>
+        // Keyboard Event Listener
+        document.addEventListener("keydown", direction);
+        function direction(event) {
+            if (event.keyCode == 37 && d != "RIGHT") d = "LEFT";
+            else if (event.keyCode == 38 && d != "DOWN") d = "UP";
+            else if (event.keyCode == 39 && d != "LEFT") d = "RIGHT";
+            else if (event.keyCode == 40 && d != "UP") d = "DOWN";
+        }
 
+        // Mobile Controls click logic
+        function changeDir(dir) {
+            if (dir == "LEFT" && d != "RIGHT") d = "LEFT";
+            else if (dir == "UP" && d != "DOWN") d = "UP";
+            else if (dir == "RIGHT" && d != "LEFT") d = "RIGHT";
+            else if (dir == "DOWN" && d != "UP") d = "DOWN";
+        }
+
+        function collision(head, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (head.x == array[i].x && head.y == array[i].y) return true;
+            }
+            return false;
+        }
+
+        // Main Draw Loop Execution
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Snake Body
+            for (let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = i == 0 ? "#00f2ff" : "#ff00cc"; // Glowing Neon head and tail
+                ctx.strokeStyle = "#0b0f19";
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = i == 0 ? "#00f2ff" : "#ff00cc";
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+            }
+
+            // Draw Food Element
+            ctx.fillStyle = "#ffd700"; // Gold color food
+            ctx.shadowColor = "#ffd700";
+            ctx.fillRect(food.x, food.y, box, box);
+            ctx.shadowBlur = 0; // Reset shadows for performance
+
+            // Capture Head Position
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            // Update Direction positions
+            if (d == "LEFT") snakeX -= box;
+            if (d == "UP") snakeY -= box;
+            if (d == "RIGHT") snakeX += box;
+            if (d == "DOWN") snakeY += box;
+
+            // Handle Snake eating food mechanism
+            if (snakeX == food.x && snakeY == food.y) {
+                score++;
+                document.getElementById("score").innerText = score;
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem("snakeHighScore", highScore);
+                    document.getElementById("highScore").innerText = highScore;
+                }
+                generateFood();
+            } else {
+                snake.pop(); // Remove the tail cell
+            }
+
+            // Core Head Collision coordinates rules
+            let newHead = { x: snakeX, y: snakeY };
+
+            // Game Over Boundary Conditions & Self collision Check
+            if (
+                snakeX < 0 || snakeY < 0 || 
+                snakeX >= canvas.width || snakeY >= canvas.height || 
+                collision(newHead, snake)
+            ) {
+                clearInterval(gameInterval);
+                document.getElementById("gameOver").style.display = "flex";
+                return;
+            }
+
+            snake.unshift(newHead);
+        }
+    </script>
 </body>
 </html>
